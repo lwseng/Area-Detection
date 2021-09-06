@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3313D5B526E600ED00F33E8B /* utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3313D5B426E600ED00F33E8B /* utilities.swift */; };
 		3344690326E342CE005838CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344690226E342CE005838CA /* AppDelegate.swift */; };
 		3344690526E342CE005838CA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344690426E342CE005838CA /* SceneDelegate.swift */; };
 		3344690726E342CE005838CA /* AreaDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344690626E342CE005838CA /* AreaDetectionViewController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3313D5B426E600ED00F33E8B /* utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utilities.swift; sourceTree = "<group>"; };
 		334468FF26E342CE005838CA /* Area Detection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Area Detection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3344690226E342CE005838CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3344690426E342CE005838CA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				3344690426E342CE005838CA /* SceneDelegate.swift */,
 				3344690B26E342D1005838CA /* Assets.xcassets */,
 				3344691026E342D1005838CA /* Info.plist */,
+				3313D5B426E600ED00F33E8B /* utilities.swift */,
 			);
 			path = "Area Detection";
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3344690726E342CE005838CA /* AreaDetectionViewController.swift in Sources */,
+				3313D5B526E600ED00F33E8B /* utilities.swift in Sources */,
 				3344690326E342CE005838CA /* AppDelegate.swift in Sources */,
 				3344693926E36FF4005838CA /* SetupGeoAreaViewController.swift in Sources */,
 				3344690526E342CE005838CA /* SceneDelegate.swift in Sources */,
