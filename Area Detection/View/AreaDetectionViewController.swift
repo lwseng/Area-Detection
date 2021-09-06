@@ -18,9 +18,16 @@ class AreaDetectionViewController: UIViewController {
     func setupView(){
         let topRightButton = UIButton()
         topRightButton.setImage(UIImage(named: "icn-setting"), for: .normal)
+        topRightButton.addTarget(self, action: #selector(doBtnSetupGeoArea), for: .touchUpInside)
         
         let barButton = UIBarButtonItem(customView: topRightButton)
         self.navigationItem.setRightBarButton(barButton, animated: true)
+    }
+    
+    @objc func doBtnSetupGeoArea(){
+        let vc = SetupGeoAreaViewController(nibName: "SetupGeoAreaViewController", bundle: nil)
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

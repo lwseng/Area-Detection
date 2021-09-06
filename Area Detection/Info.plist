@@ -20,6 +20,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app need to access your location to determine whether you are inside geofence area.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app need to access your location to determine whether you are inside geofence area.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -15,6 +15,8 @@
 		3344690F26E342D1005838CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3344690D26E342D1005838CA /* LaunchScreen.storyboard */; };
 		3344691A26E342D1005838CA /* Area_DetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344691926E342D1005838CA /* Area_DetectionTests.swift */; };
 		3344692526E342D1005838CA /* Area_DetectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344692426E342D1005838CA /* Area_DetectionUITests.swift */; };
+		3344693926E36FF4005838CA /* SetupGeoAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3344693726E36FF4005838CA /* SetupGeoAreaViewController.swift */; };
+		3344693A26E36FF4005838CA /* SetupGeoAreaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3344693826E36FF4005838CA /* SetupGeoAreaViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		3344692026E342D1005838CA /* Area DetectionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Area DetectionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3344692426E342D1005838CA /* Area_DetectionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area_DetectionUITests.swift; sourceTree = "<group>"; };
 		3344692626E342D1005838CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3344693726E36FF4005838CA /* SetupGeoAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupGeoAreaViewController.swift; sourceTree = "<group>"; };
+		3344693826E36FF4005838CA /* SetupGeoAreaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetupGeoAreaViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +106,6 @@
 				3344693426E36B04005838CA /* Model */,
 				3344693226E369B4005838CA /* View */,
 				3344693526E36B09005838CA /* View Model */,
-				3344693626E36C07005838CA /* Controller */,
 				3344690226E342CE005838CA /* AppDelegate.swift */,
 				3344690426E342CE005838CA /* SceneDelegate.swift */,
 				3344690B26E342D1005838CA /* Assets.xcassets */,
@@ -133,7 +136,10 @@
 			isa = PBXGroup;
 			children = (
 				3344690D26E342D1005838CA /* LaunchScreen.storyboard */,
+				3344690626E342CE005838CA /* AreaDetectionViewController.swift */,
 				3344690826E342CE005838CA /* Main.storyboard */,
+				3344693726E36FF4005838CA /* SetupGeoAreaViewController.swift */,
+				3344693826E36FF4005838CA /* SetupGeoAreaViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -150,14 +156,6 @@
 			children = (
 			);
 			path = "View Model";
-			sourceTree = "<group>";
-		};
-		3344693626E36C07005838CA /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				3344690626E342CE005838CA /* AreaDetectionViewController.swift */,
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,6 +264,7 @@
 				3344690F26E342D1005838CA /* LaunchScreen.storyboard in Resources */,
 				3344690C26E342D1005838CA /* Assets.xcassets in Resources */,
 				3344690A26E342CE005838CA /* Main.storyboard in Resources */,
+				3344693A26E36FF4005838CA /* SetupGeoAreaViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +291,7 @@
 			files = (
 				3344690726E342CE005838CA /* AreaDetectionViewController.swift in Sources */,
 				3344690326E342CE005838CA /* AppDelegate.swift in Sources */,
+				3344693926E36FF4005838CA /* SetupGeoAreaViewController.swift in Sources */,
 				3344690526E342CE005838CA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
