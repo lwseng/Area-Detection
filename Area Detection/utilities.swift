@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 func setLocation(cordinate: CLLocationCoordinate2D){
     UserDefaults.standard.setValue(cordinate.longitude, forKey: "longtitude")
@@ -36,4 +37,21 @@ func getRadius() -> Double{
         return radius
     }
     return 100
+}
+
+//show map radius overlay
+func addRadiusOverlay(mapView: MKMapView, latitude: Double, longtitude: Double, radius: Double) {
+    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
+    
+    mapView.removeOverlays(mapView.overlays)
+    mapView.addOverlay(MKCircle(center: coordinate, radius: radius))
+}
+
+//show map annotation
+func addMapAnnotation(mapView: MKMapView, latitude: Double, longtitude: Double){
+    let pin = MKPointAnnotation()
+    pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
+
+    mapView.removeAnnotations(mapView.annotations)
+    mapView.addAnnotation(pin)
 }

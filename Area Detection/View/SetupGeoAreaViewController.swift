@@ -92,7 +92,7 @@ class SetupGeoAreaViewController: UIViewController {
             setupRegion(latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
             touchCoordinate = CLLocationCoordinate2D(latitude: getLatitude(), longitude: getLongtitude())
         }
-        addRadiusOverlay(latitude: getLatitude(), longtitude: getLongtitude())
+        addRadiusOverlay(mapView: mapView, latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
     }
     
     //show area in map
@@ -101,24 +101,7 @@ class SetupGeoAreaViewController: UIViewController {
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: radius, longitudinalMeters: radius * 15)
         mapView.setRegion(region, animated: true)
     }
-    
-    //show map annotation
-    func addMapAnnotation(latitude: Double, longtitude: Double){
-        let pin = MKPointAnnotation()
-        pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
-
-        mapView.removeAnnotations(mapView.annotations)
-        mapView.addAnnotation(pin)
-    }
-    
-    //show map radius overlay
-    func addRadiusOverlay(latitude: Double, longtitude: Double) {
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
         
-        mapView.removeOverlays(mapView.overlays)
-        mapView.addOverlay(MKCircle(center: coordinate, radius: settingRadius))
-    }
-    
     //MARK:- Event Action
     @objc func dimissKeyboard(){
         view.endEditing(true)
@@ -128,8 +111,8 @@ class SetupGeoAreaViewController: UIViewController {
         let touchLocation = gestureRecognizer.location(in: mapView)
         touchCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
         
-        addMapAnnotation(latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude)
-        addRadiusOverlay(latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude)
+        addMapAnnotation(mapView: mapView, latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude)
+        addRadiusOverlay(mapView: mapView, latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude, radius: settingRadius)
     }
     
     @objc func doBtnSave(){
@@ -190,7 +173,7 @@ extension SetupGeoAreaViewController: UITextFieldDelegate{
             guard let radius = Double(text) else { return }
             
             settingRadius = radius
-            addRadiusOverlay(latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude)
+            addRadiusOverlay(mapView: mapView, latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude, radius: settingRadius)
             setupRegion(latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude, radius: settingRadius)
         }
     }
