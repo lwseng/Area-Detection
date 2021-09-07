@@ -7,7 +7,6 @@
 
 import UIKit
 import MapKit
-import CoreLocation
 
 class SetupGeoAreaViewController: UIViewController {
 
@@ -35,7 +34,7 @@ class SetupGeoAreaViewController: UIViewController {
     }
     
     func setupView(){
-        radiusTextField.text = String(getRadius())
+        radiusTextField.text = String(Int(getRadius()))
         radiusTextField.delegate = self
         let tap = UITapGestureRecognizer(target: self, action: #selector(dimissKeyboard))
         self.view.addGestureRecognizer(tap)
@@ -60,11 +59,17 @@ class SetupGeoAreaViewController: UIViewController {
             locationManager.startUpdatingLocation()
             
         case .restricted, .denied:
+            btnSave.alpha = 0.5
+            btnSave.isEnabled = false
+            radiusTextField.alpha = 0.5
+            radiusTextField.isEnabled = false
+            
             let alertController = UIAlertController(
                 title: "Location Permission Denied", message: "This app need permission for detect your location",
                 preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: {
                 (action) in
+                self.mapView.gestureRecognizers?.removeAll()
             })
             alertController.addAction(cancelAction
             )
@@ -83,16 +88,19 @@ class SetupGeoAreaViewController: UIViewController {
         mapView.addGestureRecognizer(tap)
         
         //first time entry get user current location
-        if getLongtitude() == -1 || getLatitude() == -1{
+        if getLongtitude() == 999 || getLatitude() == 999{
             if let coordinate = locationManager.location?.coordinate{
                 setupRegion(latitude: coordinate.latitude, longtitude: coordinate.longitude, radius: getRadius())
                 touchCoordinate = coordinate
+                addMapAnnotation(mapView: mapView, latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude)
+                addRadiusOverlay(mapView: mapView, latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude, radius: getRadius())
             }
         }else{ //get setting coordinate
             setupRegion(latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
             touchCoordinate = CLLocationCoordinate2D(latitude: getLatitude(), longitude: getLongtitude())
+            addMapAnnotation(mapView: mapView, latitude: getLatitude(), longtitude: getLongtitude())
+            addRadiusOverlay(mapView: mapView, latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
         }
-        addRadiusOverlay(mapView: mapView, latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
     }
     
     //show area in map
@@ -167,6 +175,17 @@ extension SetupGeoAreaViewController: CLLocationManagerDelegate{
 
 //MARK:- UITextFieldDelegate
 extension SetupGeoAreaViewController: UITextFieldDelegate{
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if let text = textField.text as NSString?{
+            let newString = text.replacingCharacters(in: range, with: string)
+            return newString.count <= 6
+        }else{
+            return true
+        }
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         
         if let text = textField.text{

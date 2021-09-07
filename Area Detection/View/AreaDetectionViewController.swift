@@ -34,17 +34,26 @@ class AreaDetectionViewController: UIViewController {
     @IBOutlet weak var statusData: UILabel!
     
     let locationManager = CLLocationManager()
+    var isFirstTimeOpenApp = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
+        setupLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        setupInfo()
+        if isFirstTimeOpenApp{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.setupInfo()
+            })
+            isFirstTimeOpenApp = false
+        }else{
+            setupInfo()
+        }
         addMapAnnotation(mapView: mapView, latitude: getLatitude(), longtitude: getLongtitude())
     }
     
@@ -57,24 +66,30 @@ class AreaDetectionViewController: UIViewController {
         self.navigationItem.setRightBarButton(barButton, animated: true)
     }
     
-    func setupInfo(){
+    func setupLocation(){
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         locationManager.requestLocation()
-        
+    }
+    
+    func setupInfo(){
+        mapView.delegate = self
+
         if let coordinate = locationManager.location?.coordinate{
             let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: getRadius(), longitudinalMeters: 150000)
             mapView.setRegion(region, animated: true)
-            mapView.delegate = self
             
             latitudeData.text = String(coordinate.latitude)
             longtitudeData.text = String(coordinate.longitude)
+        }else{
+            latitudeData.text = "-"
+            longtitudeData.text = "-"
         }
         addRadiusOverlay(mapView: mapView, latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
         
-        geoLatitudeData.text = String(getLatitude())
-        geoLongtitudeData.text = String(getLongtitude())
-        radiusData.text = String(getRadius())
+        geoLatitudeData.text = getLatitude() == 999 ? "-" : String(getLatitude())
+        geoLongtitudeData.text = getLongtitude() == 999 ? "-" : String(getLongtitude())
+        radiusData.text = String(Int(getRadius()))
         statusData.text = checkStatus()
         statusData.textColor = checkStatus() == "Inside Area" ? UIColor.green : checkStatus() == "Outside Area" ? UIColor.red : UIColor.brown
     }
@@ -83,14 +98,18 @@ class AreaDetectionViewController: UIViewController {
         switch status{
         case .notDetermined:
             locationManager.requestAlwaysAuthorization()
+            setupInfo()
             
         case .authorizedAlways:
             locationManager.startUpdatingLocation()
+            setupInfo()
             
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
+            setupInfo()
             
         case .restricted, .denied:
+            setupInfo()
             let alertController = UIAlertController(
                 title: "Location Permission Denied", message: "This app need permission for detect your location",
                 preferredStyle: .alert)
@@ -111,7 +130,9 @@ class AreaDetectionViewController: UIViewController {
         let region = CLCircularRegion(center: coordinate, radius: getRadius(), identifier: "")
         
         if let coordinate = locationManager.location?.coordinate {
-            if region.contains(coordinate) {
+            if getLatitude() == 999 || getLongtitude() == 999{
+                return "Haven't setup Geofence Area"
+            }else if region.contains(coordinate) {
                 return "Inside Area"
             }else{
                 return "Outside Area"
@@ -145,7 +166,6 @@ extension AreaDetectionViewController: CLLocationManagerDelegate{
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         manager.stopUpdatingLocation()
     }
     

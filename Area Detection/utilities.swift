@@ -18,14 +18,14 @@ func getLongtitude() -> Double{
     if let longtitude = UserDefaults.standard.value(forKey: "longtitude") as? Double{
         return longtitude
     }
-    return -1
+    return 999
 }
 
 func getLatitude() -> Double{
     if let latitude = UserDefaults.standard.value(forKey: "latitude") as? Double{
         return latitude
     }
-    return -1
+    return 999
 }
 
 func setRadius(radius: Double){
