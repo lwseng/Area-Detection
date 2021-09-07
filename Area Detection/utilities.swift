@@ -26,3 +26,14 @@ func getLatitude() -> Double{
     }
     return -1
 }
+
+func setRadius(radius: Double){
+    UserDefaults.standard.setValue(radius, forKey: "radius")
+}
+
+func getRadius() -> Double{
+    if let radius = UserDefaults.standard.value(forKey: "radius") as? Double{
+        return radius
+    }
+    return 100
+}

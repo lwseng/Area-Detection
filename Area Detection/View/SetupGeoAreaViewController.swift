@@ -21,58 +21,31 @@ class SetupGeoAreaViewController: UIViewController {
     @IBOutlet weak var btnSave: UIButton!
     
     let locationManager = CLLocationManager()
+    var touchCoordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    var settingRadius = getRadius()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = "Setup Geofence Area"
         
+        setupView()
         setupLocation()
         setupMap()
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dimissKeyboard))
-        self.view.addGestureRecognizer(tap)
     }
     
-    func setupMap(){
-        mapView.delegate = self
-        mapView.showsUserLocation = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(doPointGeofenceArea))
-        mapView.addGestureRecognizer(tap)
-        
-        if getLongtitude() == -1 || getLatitude() == -1{
-            if let coordinate = locationManager.location?.coordinate{
-                let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 200000, longitudinalMeters: 200000)
-                mapView.setRegion(region, animated: true)
-            }
-        }else{
-            let coordinate = CLLocationCoordinate2D(latitude: getLatitude(), longitude: getLongtitude())
-            let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 200000, longitudinalMeters: 200000)
-            mapView.setRegion(region, animated: true)
-        }
-        addRadiusOverlay(latitude: getLatitude(), longtitude: getLongtitude())
+    func setupView(){
+        radiusTextField.text = String(getRadius())
+        radiusTextField.delegate = self
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dimissKeyboard))
+        self.view.addGestureRecognizer(tap)
+        btnSave.addTarget(self, action: #selector(doBtnSave), for: .touchUpInside)
     }
     
     func setupLocation(){
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         locationManager.requestLocation()
-    }
-    
-    func addMapAnnotation(latitude: Double, longtitude: Double){
-        let pin = MKPointAnnotation()
-        pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
-
-        mapView.removeAnnotations(mapView.annotations)
-        mapView.addAnnotation(pin)
-    }
-    
-    func addRadiusOverlay(latitude: Double, longtitude: Double) {
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
-        
-        mapView.removeOverlays(mapView.overlays)
-        mapView.addOverlay(MKCircle(center: coordinate, radius: 10000))
     }
     
     func checkLocationPermission(status: CLAuthorizationStatus){
@@ -102,6 +75,50 @@ class SetupGeoAreaViewController: UIViewController {
         }
     }
     
+    func setupMap(){
+        mapView.delegate = self
+        mapView.showsUserLocation = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(doPointGeofenceArea))
+        mapView.addGestureRecognizer(tap)
+        
+        //first time entry get user current location
+        if getLongtitude() == -1 || getLatitude() == -1{
+            if let coordinate = locationManager.location?.coordinate{
+                setupRegion(latitude: coordinate.latitude, longtitude: coordinate.longitude, radius: getRadius())
+                touchCoordinate = coordinate
+            }
+        }else{ //get setting coordinate
+            setupRegion(latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
+            touchCoordinate = CLLocationCoordinate2D(latitude: getLatitude(), longitude: getLongtitude())
+        }
+        addRadiusOverlay(latitude: getLatitude(), longtitude: getLongtitude())
+    }
+    
+    //show area in map
+    func setupRegion(latitude: Double, longtitude: Double, radius: Double){
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: radius, longitudinalMeters: radius * 15)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    //show map annotation
+    func addMapAnnotation(latitude: Double, longtitude: Double){
+        let pin = MKPointAnnotation()
+        pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
+
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotation(pin)
+    }
+    
+    //show map radius overlay
+    func addRadiusOverlay(latitude: Double, longtitude: Double) {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
+        
+        mapView.removeOverlays(mapView.overlays)
+        mapView.addOverlay(MKCircle(center: coordinate, radius: settingRadius))
+    }
+    
     //MARK:- Event Action
     @objc func dimissKeyboard(){
         view.endEditing(true)
@@ -109,11 +126,25 @@ class SetupGeoAreaViewController: UIViewController {
     
     @objc func doPointGeofenceArea(gestureRecognizer: UIGestureRecognizer){
         let touchLocation = gestureRecognizer.location(in: mapView)
-        let touchCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
+        touchCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
         
-//        setLocation(cordinate: touchCoordinate)
         addMapAnnotation(latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude)
         addRadiusOverlay(latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude)
+    }
+    
+    @objc func doBtnSave(){
+        setLocation(cordinate: touchCoordinate)
+        setRadius(radius: settingRadius)
+        
+        let alertController = UIAlertController(
+            title: "", message: "Setting Updated",
+            preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: {
+            (action) in
+            self.navigationController?.popViewController(animated: true)
+        })
+        alertController.addAction(action)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -148,5 +179,19 @@ extension SetupGeoAreaViewController: CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+    }
+}
+
+//MARK:- UITextFieldDelegate
+extension SetupGeoAreaViewController: UITextFieldDelegate{
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        
+        if let text = textField.text{
+            guard let radius = Double(text) else { return }
+            
+            settingRadius = radius
+            addRadiusOverlay(latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude)
+            setupRegion(latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude, radius: settingRadius)
+        }
     }
 }
