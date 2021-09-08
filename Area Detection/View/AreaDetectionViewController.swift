@@ -10,6 +10,10 @@ import MapKit
 
 class AreaDetectionViewController: UIViewController {
     
+    deinit{
+        timer?.invalidate()
+    }
+    
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var geoLatitudeLabel: UILabel!
@@ -37,6 +41,7 @@ class AreaDetectionViewController: UIViewController {
     @IBOutlet weak var statusData: UILabel!
     
     let locationManager = CLLocationManager()
+    var timer: Timer?
     var isFirstTimeOpenApp = true
     
     override func viewDidLoad() {
@@ -44,6 +49,10 @@ class AreaDetectionViewController: UIViewController {
         
         setupView()
         setupLocation()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { timer in
+            self.locationManager.requestLocation()
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -177,7 +186,13 @@ extension AreaDetectionViewController: CLLocationManagerDelegate{
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        manager.stopUpdatingLocation()
+        guard let coordinate = mapView.userLocation.location?.coordinate else { return }
+        
+        latitudeData.text = String(coordinate.latitude)
+        longtitudeData.text = String(coordinate.longitude)
+        wifiData.text = getDeviceWifiInfo(key: "SSID")
+        statusData.text = checkStatus()
+        statusData.textColor = checkStatus() == "Inside Area" ? UIColor.green : checkStatus() == "Outside Area" ? UIColor.red : UIColor.brown
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
