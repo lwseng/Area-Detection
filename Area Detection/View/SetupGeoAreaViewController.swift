@@ -68,6 +68,8 @@ class SetupGeoAreaViewController: UIViewController {
             btnSave.isEnabled = false
             radiusTextField.alpha = 0.5
             radiusTextField.isEnabled = false
+            wifiTextField.alpha = 0.5
+            btnUpdateWifi.isEnabled = false
             
             let alertController = UIAlertController(
                 title: "Location Permission Denied", message: "This app need permission for detect your location",
