@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -26,10 +27,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" showsUserLocation="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LZp-NV-GCb">
-                    <rect key="frame" x="0.0" y="44" width="414" height="327"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="409"/>
                 </mapView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Mtg-Me-Aht">
-                    <rect key="frame" x="20" y="381" width="374" height="134"/>
+                    <rect key="frame" x="20" y="463" width="374" height="134"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="c4S-xK-KzN">
                             <rect key="frame" x="0.0" y="0.0" width="49" height="62"/>
@@ -68,7 +69,7 @@
                     </subviews>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHN-JQ-Vqf">
-                    <rect key="frame" x="129.5" y="479" width="51" height="30"/>
+                    <rect key="frame" x="129.5" y="561" width="51" height="30"/>
                     <state key="normal" title="Update"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ghz-NT-4Xd">
@@ -87,7 +88,7 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ghz-NT-4Xd" secondAttribute="bottom" id="37H-mN-LUn"/>
-                <constraint firstItem="LZp-NV-GCb" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.4" id="4bt-Nk-YVk"/>
+                <constraint firstItem="LZp-NV-GCb" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.5" id="4bt-Nk-YVk"/>
                 <constraint firstItem="nHN-JQ-Vqf" firstAttribute="centerY" secondItem="kxv-ds-Ytc" secondAttribute="centerY" id="9Cy-oh-vkh"/>
                 <constraint firstItem="ghz-NT-4Xd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="FBR-S3-pqR"/>
                 <constraint firstItem="LZp-NV-GCb" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="MaW-PN-ANm"/>
