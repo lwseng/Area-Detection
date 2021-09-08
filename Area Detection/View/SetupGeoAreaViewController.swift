@@ -95,14 +95,16 @@ class SetupGeoAreaViewController: UIViewController {
         //first time entry get user current location
         if getLongtitude() == 999 || getLatitude() == 999{
             if let coordinate = locationManager.location?.coordinate{
-                setupRegion(latitude: coordinate.latitude, longtitude: coordinate.longitude, radius: getRadius())
                 touchCoordinate = coordinate
+                
+                setupRegion(latitude: coordinate.latitude, longtitude: coordinate.longitude, radius: getRadius())
                 addMapAnnotation(mapView: mapView, latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude)
                 addRadiusOverlay(mapView: mapView, latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude, radius: getRadius())
             }
         }else{ //get setting coordinate
-            setupRegion(latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
             touchCoordinate = CLLocationCoordinate2D(latitude: getLatitude(), longitude: getLongtitude())
+
+            setupRegion(latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
             addMapAnnotation(mapView: mapView, latitude: getLatitude(), longtitude: getLongtitude())
             addRadiusOverlay(mapView: mapView, latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
         }
@@ -120,6 +122,7 @@ class SetupGeoAreaViewController: UIViewController {
         view.endEditing(true)
     }
     
+    //mapView tap to point location
     @objc func doPointGeofenceArea(gestureRecognizer: UIGestureRecognizer){
         let touchLocation = gestureRecognizer.location(in: mapView)
         touchCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
@@ -171,13 +174,7 @@ extension SetupGeoAreaViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         manager.stopUpdatingLocation()
-        
-        let location = CLLocationCoordinate2D(latitude: getLatitude(), longitude: getLongtitude())
-
-        let pin = MKPointAnnotation()
-        pin.coordinate = location
-        
-        mapView.addAnnotation(pin)
+        addMapAnnotation(mapView: mapView, latitude: getLatitude(), longtitude: getLongtitude())
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
