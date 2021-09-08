@@ -39,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		3313D5B426E600ED00F33E8B /* utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utilities.swift; sourceTree = "<group>"; };
+		3313D5B626E7DFD500F33E8B /* Area Detection.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Area Detection.entitlements"; sourceTree = "<group>"; };
 		334468FF26E342CE005838CA /* Area Detection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Area Detection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3344690226E342CE005838CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3344690426E342CE005838CA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +106,7 @@
 		3344690126E342CE005838CA /* Area Detection */ = {
 			isa = PBXGroup;
 			children = (
+				3313D5B626E7DFD500F33E8B /* Area Detection.entitlements */,
 				3344693426E36B04005838CA /* Model */,
 				3344693226E369B4005838CA /* View */,
 				3344693526E36B09005838CA /* View Model */,
@@ -472,6 +474,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Area Detection/Area Detection.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 66VPE47DN4;
 				INFOPLIST_FILE = "Area Detection/Info.plist";
@@ -491,6 +494,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Area Detection/Area Detection.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 66VPE47DN4;
 				INFOPLIST_FILE = "Area Detection/Info.plist";

@@ -18,6 +18,9 @@ class AreaDetectionViewController: UIViewController {
     @IBOutlet weak var geoLongtitudeLabel: UILabel!
     @IBOutlet weak var geoLongtitudeData: UILabel!
     
+    @IBOutlet weak var geoWifiLabel: UILabel!
+    @IBOutlet weak var geoWifiData: UILabel!
+    
     @IBOutlet weak var radiusLabel: UILabel!
     @IBOutlet weak var radiusData: UILabel!
     
@@ -75,6 +78,7 @@ class AreaDetectionViewController: UIViewController {
     func setupInfo(){
         mapView.delegate = self
 
+        //Map info
         if let coordinate = locationManager.location?.coordinate{
             let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: getRadius(), longitudinalMeters: 150000)
             mapView.setRegion(region, animated: true)
@@ -87,9 +91,14 @@ class AreaDetectionViewController: UIViewController {
         }
         addRadiusOverlay(mapView: mapView, latitude: getLatitude(), longtitude: getLongtitude(), radius: getRadius())
         
+        //Geofence Area info
         geoLatitudeData.text = getLatitude() == 999 ? "-" : String(getLatitude())
         geoLongtitudeData.text = getLongtitude() == 999 ? "-" : String(getLongtitude())
+        geoWifiData.text = getWifiInfo(key: "SSID")
         radiusData.text = String(Int(getRadius()))
+        
+        //Device info
+        wifiData.text = getDeviceWifiInfo(key: "SSID")
         statusData.text = checkStatus()
         statusData.textColor = checkStatus() == "Inside Area" ? UIColor.green : checkStatus() == "Outside Area" ? UIColor.red : UIColor.brown
     }
@@ -132,6 +141,8 @@ class AreaDetectionViewController: UIViewController {
         if let coordinate = locationManager.location?.coordinate {
             if getLatitude() == 999 || getLongtitude() == 999{
                 return "Haven't setup Geofence Area"
+            }else if getDeviceWifiInfo(key: "BSSID") == getWifiInfo(key: "BSSID"){
+                return "Inside Area"
             }else if region.contains(coordinate) {
                 return "Inside Area"
             }else{

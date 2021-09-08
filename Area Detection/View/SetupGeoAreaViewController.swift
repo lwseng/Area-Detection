@@ -16,12 +16,15 @@ class SetupGeoAreaViewController: UIViewController {
     @IBOutlet weak var radiusTextField: UITextField!
     
     @IBOutlet weak var wifiLabel: UILabel!
+    @IBOutlet weak var wifiTextField: UITextField!
+    @IBOutlet weak var btnUpdateWifi: UIButton!
     
     @IBOutlet weak var btnSave: UIButton!
     
     let locationManager = CLLocationManager()
     var touchCoordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var settingRadius = getRadius()
+    var wifiData = getWifiInfo(key: "BSSID")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +39,10 @@ class SetupGeoAreaViewController: UIViewController {
     func setupView(){
         radiusTextField.text = String(Int(getRadius()))
         radiusTextField.delegate = self
+        wifiTextField.text = getWifiInfo(key: "SSID")
         let tap = UITapGestureRecognizer(target: self, action: #selector(dimissKeyboard))
         self.view.addGestureRecognizer(tap)
+        btnUpdateWifi.addTarget(self, action: #selector(doBtnUpdateWifi), for: .touchUpInside)
         btnSave.addTarget(self, action: #selector(doBtnSave), for: .touchUpInside)
     }
     
@@ -123,9 +128,16 @@ class SetupGeoAreaViewController: UIViewController {
         addRadiusOverlay(mapView: mapView, latitude: touchCoordinate.latitude, longtitude: touchCoordinate.longitude, radius: settingRadius)
     }
     
+    @objc func doBtnUpdateWifi(){
+        wifiTextField.text = getDeviceWifiInfo(key: "SSID")
+        wifiData = getDeviceWifiInfo(key: "BSSID")
+    }
+    
     @objc func doBtnSave(){
         setLocation(cordinate: touchCoordinate)
         setRadius(radius: settingRadius)
+        setWifiInfo(key: "SSID", data: wifiTextField.text ?? "-")
+        setWifiInfo(key: "BSSID", data: wifiData)
         
         let alertController = UIAlertController(
             title: "", message: "Setting Updated",

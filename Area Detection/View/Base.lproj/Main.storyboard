@@ -26,10 +26,10 @@
                                         <rect key="frame" x="20" y="319.5" width="374" height="218"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vn7-JL-LXr">
-                                                <rect key="frame" x="0.0" y="0.0" width="177" height="156.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="177" height="201.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WMl-jm-IVF">
-                                                        <rect key="frame" x="0.0" y="0.0" width="177" height="156.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="177" height="201.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Geofence Area" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41d-9O-UKV">
                                                                 <rect key="frame" x="0.0" y="0.0" width="124.5" height="21.5"/>
@@ -71,8 +71,25 @@
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="qI2-9C-dNc">
+                                                                <rect key="frame" x="0.0" y="121.5" width="106.5" height="35"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wi-Fi Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2o-NP-Eaz" userLabel="Wifi Label">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="80.5" height="18"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="network-2.4GHz" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tye-9v-gdp" userLabel="WIfi Data">
+                                                                        <rect key="frame" x="0.0" y="18" width="106.5" height="17"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="3kt-4o-NNq">
-                                                                <rect key="frame" x="0.0" y="121.5" width="46.5" height="35"/>
+                                                                <rect key="frame" x="0.0" y="166.5" width="46.5" height="35"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Radius" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYs-tz-to5">
                                                                         <rect key="frame" x="0.0" y="0.0" width="46.5" height="18"/>
@@ -223,6 +240,8 @@
                         <outlet property="geoLatitudeLabel" destination="y9P-Wo-OAV" id="nu6-h9-5Sl"/>
                         <outlet property="geoLongtitudeData" destination="nGO-Yg-NDN" id="wrg-lI-zNX"/>
                         <outlet property="geoLongtitudeLabel" destination="JSh-G9-huG" id="3a8-zm-cyB"/>
+                        <outlet property="geoWifiData" destination="tye-9v-gdp" id="bih-Od-uIT"/>
+                        <outlet property="geoWifiLabel" destination="P2o-NP-Eaz" id="jfo-uj-wrQ"/>
                         <outlet property="latitudeData" destination="1IV-Qy-fMh" id="9ZU-ib-RN1"/>
                         <outlet property="latitudeLabel" destination="Zhq-By-h22" id="hAg-dW-xZe"/>
                         <outlet property="longtitudeData" destination="Mhb-Nv-AKd" id="Ug0-7w-nMz"/>

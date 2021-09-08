@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 import MapKit
+import SystemConfiguration.CaptiveNetwork
 
 func setLocation(cordinate: CLLocationCoordinate2D){
     UserDefaults.standard.setValue(cordinate.longitude, forKey: "longtitude")
@@ -54,4 +55,36 @@ func addMapAnnotation(mapView: MKMapView, latitude: Double, longtitude: Double){
 
     mapView.removeAnnotations(mapView.annotations)
     mapView.addAnnotation(pin)
+}
+
+//store wifi setting info
+func setWifiInfo(key: String, data: String){
+    if key == "SSID"{
+        UserDefaults.standard.setValue(data, forKey: "wifiname")
+    }else if key == "BSSID"{
+        UserDefaults.standard.setValue(data, forKey: "wifidata")
+    }
+}
+
+
+func getWifiInfo(key: String) -> String{
+    if key == "SSID"{
+        if let wifiName = UserDefaults.standard.value(forKey: "wifiname") as? String{
+            return wifiName
+        }
+    }else if key == "BSSID"{
+        if let wifiData = UserDefaults.standard.value(forKey: "wifidata") as? String{
+            return wifiData
+        }
+    }
+    return "-"
+}
+
+func getDeviceWifiInfo(key: String) -> String{
+    guard let interfaces = CNCopySupportedInterfaces() as? [String] else { return "-" }
+    for interface in interfaces {
+        guard let interfaceInfo = CNCopyCurrentNetworkInfo(interface as CFString) as NSDictionary? else { continue }
+        return interfaceInfo[key] as? String ?? "No network"
+    }
+    return "No network"
 }
